@@ -4,7 +4,6 @@ function CompareList($list1, $list2)
 	{
 		return $false
 	}
-
 	for($ndx = 0; $ndx -lt $list1.count ; $ndx++)
 	{
 		if( $list1[$ndx].ToString() -ne $list2[$ndx].ToString() )
@@ -12,7 +11,6 @@ function CompareList($list1, $list2)
 			return $false
 		}
 	}
-
 	return $true
 }
 
@@ -20,7 +18,6 @@ function ValidateHANetwork($clusterName, $switchName)
 {
 	$validationResult = $true
 	$cluster = get-scvmhostcluster -name $clusterName
-
 	$vNic = Get-SCVirtualNetwork -VMHost $cluster.nodes[0] | where {$_.name -eq $switchName}
 	if( $vNic -eq $null )
 	{
@@ -33,7 +30,6 @@ function ValidateHANetwork($clusterName, $switchName)
 	{
 		Write-Host "Virtual Switch not attached to external network card on host " + $cluster.nodes[0].Name
 		$validationResult = $false
-
 	}
 	else
 	{
@@ -68,10 +64,8 @@ function ValidateHANetwork($clusterName, $switchName)
 			{
 				$ln1 = @($vNic.VMHostNetworkAdapters[0].LogicalNetworks | Sort-Object Name)
 				$ln2 = @($vNicToCompare.VMHostNetworkAdapters[0].LogicalNetworks | Sort-Object Name)
-
 				$ln1Id = @($vNic.VMHostNetworkAdapters[0].LogicalNetworks | Sort-Object ID | select ID)
 				$ln2Id = @($vNicToCompare.VMHostNetworkAdapters[0].LogicalNetworks | Sort-Object ID | select ID)
-	
 				$result = CompareList $ln1Id $ln2Id
 				
 				if( $result -eq $false )
@@ -84,17 +78,14 @@ function ValidateHANetwork($clusterName, $switchName)
 					Write-Host "Host " $node.name " Logical networks for adapter "  $vNicToCompare.VMHostNetworkAdapters[0].Name 
 					@($ln2) | ft *
 					Write-Host "------------------------------------------------"
-		
 					$validationResult = $false
 				}
 				else
 				{
 					$sub1 = @($vNic.VMHostNetworkAdapters[0].SubnetVLans | Sort-Object Name)
 					$sub2 = @($vNicToCompare.VMHostNetworkAdapters[0].SubnetVLans | Sort-Object Name)
-		
 					$sub1Id = @($vNic.VMHostNetworkAdapters[0].SubnetVLans | Sort-Object ID | select ID)
 					$sub2Id = @($vNicToCompare.VMHostNetworkAdapters[0].SubnetVLans | Sort-Object ID | select ID)
-		
 					$result = CompareList $sub1Id $sub2Id
 					
 					if( $result -eq $false )
@@ -107,7 +98,6 @@ function ValidateHANetwork($clusterName, $switchName)
 						Write-Host "Host " $node.name " Subnets"
 						@($sub2) | ft *
 						Write-Host "------------------------------------------------"
-			
 						$validationResult = $false
 					}
                     else
@@ -122,7 +112,6 @@ function ValidateHANetwork($clusterName, $switchName)
 						    Write-Host "Host " $node.name " Subnets"
 						    $vNicToCompare.VMHostNetworkAdapters[0].VLanMode
 						    Write-Host "------------------------------------------------"
-			
 						    $validationResult = $false
                         }
                     }
@@ -134,7 +123,6 @@ function ValidateHANetwork($clusterName, $switchName)
 	return $validationResult
 }
 
-
 if ($args.Length -ne 2 )
 {
 	Write-Host "Usage: CheckClusterNetwork <clusterName> <switchName>" 
@@ -142,9 +130,8 @@ if ($args.Length -ne 2 )
 else
 {
 	$result = ValidateHANetwork $args[0] $args[1]
-
 	if( $result -eq $true)
 	{
 		Write-Host "The cluster virutal network is HA and is configured correctly"
 	}
-}
+}
