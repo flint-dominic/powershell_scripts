@@ -1,4 +1,4 @@
-﻿Import-Module "C:\scripts\QueryTFSWorkItems\tfs.work.item.lib"
+﻿Import-Module "C:\scripts\QueryTFSWorkItems\tfs.work.item.lib.psm1"
 
 $TFSURL = "http://server:8080/tfs/CDM"
 $FieldNameForPath = "AreaPath"
