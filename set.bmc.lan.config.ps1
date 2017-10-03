@@ -1,23 +1,3 @@
-﻿<#
-.EXAMPLE
-    
-    $creds = Get-Credential
-
-    .\SetBMCLANConfig.ps1 -ipmitoolPath "C:\Users\Administrator\Desktop\ipmitool\" -CSVPath "C:\Users\Administrator\Desktop\BMCData\r2staticIP_nonSSU.csv" `
-        -GatewayIP "192.168.161.1" -SubNetMask "255.255.255.128" -creds $creds |Out-File .\r#BMCLANConfigInfo.txt
-
-.EXAMPLE
-
-    $Username = "user"
-    $Password = "myPassword"
-    $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force
-    $creds = New-Object -TypeName System.Management.Automation.PSCredential -argumentlist $Username,$securePassword
-
-    .\SetBMCLANConfig.ps1 -ipmitoolPath "C:\Users\Administrator\Desktop\ipmitool\" -CSVPath "C:\Users\Administrator\Desktop\BMCData\r2staticIP_nonSSU.csv" `
-        -GatewayIP "192.168.161.1" -SubNetMask "255.255.255.128" -creds $creds |Export-Clixml .\r1BMCInfo.xml
-
-#>
-
 param
 (
     [Parameter(Mandatory=$True)]
@@ -36,7 +16,7 @@ param
     [PSCredential]$creds
 )
 
-$BMCData = Import-Csv $CSVPath
+$BMCData = Import-CSV $CSVPath
 $Password = $creds.GetNetworkCredential().Password
 $Username = $creds.UserName
 

@@ -1,4 +1,4 @@
-﻿[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.TeamFoundation.Client")
+[System.Reflection.Assembly]::LoadWithPartialName("Microsoft.TeamFoundation.Client")
 [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.TeamFoundation.WorkItemTracking.Client")
 [System.Reflection.Assembly]::LoadWithPartialName("Microsoft.TeamFoundation.Build.Client")
 Add-PSSnapin Microsoft.TeamFoundation.PowerShell
@@ -34,20 +34,15 @@ Function QueryAndBulkEdit([string]$TFSURL, [string]$FieldNameForPath, [string]$W
     $teamProjectCollection = [Microsoft.TeamFoundation.Client.TfsTeamProjectCollectionFactory]::GetTeamProjectCollection($TFSURL)
     $wit = $teamProjectCollection.GetService([Type]"Microsoft.TeamFoundation.WorkItemTracking.Client.WorkItemStore")
 
-$WIQL = @"
-SELECT [System.Id], [System.WorkItemType], [System.State], [System.AssignedTo], [System.Title] 
-FROM WorkItems 
-where [System.$FieldNameForPath] = '$WorkItemPath' AND [System.$FieldName] Contains '$SearchString'
-ORDER BY [System.WorkItemType], [System.Id] 
-"@
+    $WIQL = @"
+    SELECT [System.Id], [System.WorkItemType], [System.State], [System.AssignedTo], [System.Title] 
+    FROM WorkItems 
+    WHERE [System.$FieldNameForPath] = '$WorkItemPath' AND [System.$FieldName] Contains '$SearchString'
+    ORDER BY [System.WorkItemType], [System.Id] 
+    "@
 
     Write-Host $WIQL
-
-    #Don't do this, it updates silently without giving a text spew
-    #$collection = $wit.Query($WIQL) | % { Update-WorkitemField $TFSURL $_.Id $FieldNameForUpdate $UpdateValue }
-
     $collection = $wit.Query($WIQL) 
-
     foreach($item in $collection)
     {
         Write-Host "Update $($item.Id) $FieldNameForUpdate Field with $UpdateValue"
