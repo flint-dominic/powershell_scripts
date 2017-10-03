@@ -1,14 +1,14 @@
 ﻿Import-Module "C:\scripts\QueryTFSWorkItems\tfs.work.item.lib.psm1"
 
-$TFSURL = "http://server:8080/tfs/CDM"
-$FieldNameForPath = "AreaPath"
-$WorkItemPath = "Root\Path"
+$TFSURL = "http://<server>/<path>"
+$fieldNameForPath = "<AreaPath>"
+$workItemPath = "<Root\Path>"
 
-$FieldName = "Description"
+$fieldName = "Description"
 #Replace "user" with your own alias
-$SearchString = "Customer: user"  
-$FieldNameForUpdate = "Assigned To"
+$searchString = "Customer: <user>"  
+$fieldNameForUpdate = "Assigned To"
 #replace "name" with your full display name in TFS"
-$UpdateValue = "name"
+$updateValue = "<name>"
 
-QueryAndBulkEdit $TFSURL $FieldNameForPath $WorkItemPath $FieldName $SearchString $FieldNameForUpdate $UpdateValue
+QueryAndBulkEdit $TFSURL $fieldNameForPath $workItemPath $fieldName $searchString $fieldNameForUpdate $updateValue
