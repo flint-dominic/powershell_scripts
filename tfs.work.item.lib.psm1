@@ -43,9 +43,6 @@ ORDER BY [System.WorkItemType], [System.Id]
 
     Write-Host $WIQL
 
-    #Don't do this, it updates silently without giving a text spew
-    #$collection = $wit.Query($WIQL) | % { Update-WorkitemField $TFSURL $_.Id $FieldNameForUpdate $UpdateValue }
-
     $collection = $wit.Query($WIQL) 
 
     foreach($item in $collection)
