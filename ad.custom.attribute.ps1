@@ -1,1 +1,7 @@
-Get-aduser $user -properties "<customADpropertyName>" | select SamAccountName,@{name='<customADpropertyName>';e={$_.<customADpropertyName>}}
+Param
+(
+    	[string]$user='Administrator',
+    	[string]$ADproperties='SID'
+)
+
+Get-aduser $user -properties "$ADproperties" | select SamAccountName,@{name='$ADproperties';e={$_.$ADproperties}}
