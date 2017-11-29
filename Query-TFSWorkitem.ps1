@@ -31,8 +31,8 @@ Param
     	[string]$TFSLibLoc='C:\scripts\QueryTFSWorkItems\tfs.work.item.lib.psm1',
     	[string]$TFSURL="http://<server>/<path>",
     	[string]$WorkItemPath="<Root\Path>",
-      [string]$SearchString = "Customer: <user>",
-      [string]$UpdateValue = "<name>"
+        [string]$SearchString = "Customer: <user>",
+        [string]$UpdateValue = "<name>"
 )
 
 Import-Module $TFSLibLoc
