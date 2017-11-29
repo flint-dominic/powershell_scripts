@@ -1,3 +1,22 @@
+<#
+.SYNOPSIS
+Checks if HA network is available for specified cluster.
+
+.DESCRIPTION
+This script takes a clustername and switch name input to check HA availability.
+
+.PARAMETER clusterName
+name of HA cluster to test
+
+.PARAMETER switchName
+name of switch to test against
+
+.EXAMPLE
+.\Check-HANetwork.ps1 cluster01 switch01
+This would test the cluster 'cluster01' against the switch 'switch01'
+
+#>
+
 function CompareList($list1, $list2)
 {
 	if( $list1.count -ne $list2.count )
@@ -120,7 +139,7 @@ function ValidateHANetwork($clusterName, $switchName)
 
 if ($args.Length -ne 2 )
 {
-	Write-Host "Usage: CheckClusterNetwork <clusterName> <switchName>" 
+	Write-Host "Usage: Check-HANetwork <clusterName> <switchName>" 
 }
 else
 {
