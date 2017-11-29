@@ -1,14 +1,43 @@
-﻿Import-Module "C:\scripts\QueryTFSWorkItems\tfs.work.item.lib.psm1"
+<#
+.SYNOPSIS
+Get work item from TFS
 
-$TFSURL = "http://<server>/<path>"
-$fieldNameForPath = "<AreaPath>"
-$workItemPath = "<Root\Path>"
+.DESCRIPTION
+This script will retrieve a work item from specified TFC User using QueryAndBulkEdit and imported lib.
 
-$fieldName = "Description"
-#Replace "user" with your own alias
-$searchString = "Customer: <user>"  
-$fieldNameForUpdate = "Assigned To"
-#replace "name" with your full display name in TFS"
-$updateValue = "<name>"
+.PARAMETER TFSLibLoc
+location of TFS access library
 
-QueryAndBulkEdit $TFSURL $fieldNameForPath $workItemPath $fieldName $searchString $fieldNameForUpdate $updateValue
+.PARAMETER TFSURL
+internet path to TFS server
+
+.PARAMETER WorkItemPath
+work item path on the TFS server
+
+.PARAMETER SearchString
+alias to filter with, usually your own
+
+.PARAMETER UpdateValue
+full display name in TFS
+
+.EXAMPLE
+.\Validate-ADMembers.ps1 -OutputDirectory 'C:\tmp\'
+This would change the default output directory location from the default of home directory
+
+#>
+
+Param
+(
+    	[string]$TFSLibLoc='C:\scripts\QueryTFSWorkItems\tfs.work.item.lib.psm1',
+    	[string]$TFSURL="http://<server>/<path>",
+    	[string]$WorkItemPath="<Root\Path>",
+      [string]$SearchString = "Customer: <user>",
+      [string]$UpdateValue = "<name>"
+)
+
+Import-Module $TFSLibLoc
+
+$FieldName = "Description"
+$FieldNameForUpdate = "Assigned To"
+
+QueryAndBulkEdit $TFSURL $fieldNameForPath $WorkItemPath $FieldName $SearchString $FieldNameForUpdate $UpdateValue
