@@ -21,8 +21,8 @@ alias to filter with, usually your own
 full display name in TFS
 
 .EXAMPLE
-.\Validate-ADMembers.ps1 -OutputDirectory 'C:\tmp\'
-This would change the default output directory location from the default of home directory
+.\Query-TFSWorkitem.ps1 -UpdateValue 'matt houston'
+This will use all the defaults, but update the TFS full dislay name
 
 #>
 
