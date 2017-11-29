@@ -1,3 +1,40 @@
+<#
+.SYNOPSIS
+Used to update BMC IP addresses from CSV file.
+
+.DESCRIPTION
+This script will use a list of old/new IP address to update BMC IP addresses using the ipmi tool.
+
+.PARAMETER BMCDataFile
+location of CSV list
+
+.PARAMETER BMCIPAddress
+old IP address to change, not used if CSV given
+
+.PARAMETER Password
+BMC password to use
+
+.PARAMETER UserName
+BMC username to use
+
+.PARAMETER NetID
+the vlan to use
+
+.PARAMETER NewIPAddress
+new IP address to change, not used if CSV given
+
+.PARAMETER NetMask
+which network mask to use
+
+.PARAMETER Gateway
+which gateway to use
+
+.EXAMPLE
+.\Set-BMCAddresses -BMCDataFile 'C:\tmp\listofchanges.csv'
+This would update the BMC IP addresses using the stated list.
+
+#>
+
 Param
 (
     [Parameter(Mandatory=$false)][string]$BMCDataFile,
@@ -9,8 +46,10 @@ Param
     [Parameter(Mandatory=$false)][string]$NetMask,
     [Parameter(Mandatory=$false)][string]$Gateway
 )
+
 [string]$ScriptPath = (Split-Path $MyInvocation.MyCommand.Path)
 $IPMITool = $ScriptPath + "\ipmitool.exe "
+
 If (-not(Test-Path $IPMITool)) { Throw "ipmitool.exe could not be found in the current directory" }
 
 If ($BMCDataFile)
