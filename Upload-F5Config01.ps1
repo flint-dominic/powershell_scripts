@@ -1,4 +1,37 @@
-﻿param ( 
+<#
+.SYNOPSIS
+Upload F5 config file and reboot.
+
+.DESCRIPTION
+This script will update the config file on F5 load balancer using iControl snappin.
+
+.PARAMETER manifest1ConfigFilename
+location of the xml configuration file
+
+.PARAMETER f5DevDesiredAdminPassword
+F5 new Admin password
+
+.PARAMETER f5DevDesiredRootPassword
+F5 new Root password
+
+.PARAMETER f5Dev1IP
+IP address of the primary F5 load balancer
+
+.PARAMETER f5Dev2IP
+IP address of the secondary F5 load balancer
+
+.PARAMETER f5CurrentAdminPassword
+F5 current Admin password
+
+.PARAMETER f5CurrentRootPassword
+F5 current Root password
+
+.EXAMPLE
+.\Upload-F5Config01.ps1
+
+#>
+
+param ( 
 	[Parameter(Mandatory=$true)]
 	[string] $manifest1ConfigFilename,
 	[Parameter(Mandatory=$true)]
